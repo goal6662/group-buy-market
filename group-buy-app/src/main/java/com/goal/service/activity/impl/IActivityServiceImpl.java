@@ -1,5 +1,6 @@
 package com.goal.service.activity.impl;
 
+import com.goal.enums.type.DiscountTypeEnum;
 import com.goal.mapper.GroupBuyActivityMapper;
 import com.goal.mapper.GroupBuyDiscountMapper;
 import com.goal.mapper.SkuMapper;
@@ -41,7 +42,7 @@ public class IActivityServiceImpl implements IActivityService {
         GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount = new GroupBuyActivityDiscountVO.GroupBuyDiscount(
                 groupBuyDiscountRes.getDiscountName(),
                 groupBuyDiscountRes.getDiscountDesc(),
-                groupBuyDiscountRes.getDiscountType(),
+                DiscountTypeEnum.getDiscountTypeEnum(groupBuyDiscountRes.getDiscountType()),
                 groupBuyDiscountRes.getMarketPlan(),
                 groupBuyDiscountRes.getMarketExpr(),
                 groupBuyDiscountRes.getTagId()

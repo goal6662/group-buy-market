@@ -1,10 +1,13 @@
 package com.goal.service.trail.node;
 
+import com.goal.common.BizException;
+import com.goal.common.ResponseCode;
 import com.goal.design.StrategyHandler;
 import com.goal.model.entity.MarketProductEntity;
 import com.goal.model.entity.TrialBalanceEntity;
 import com.goal.model.vo.GroupBuyActivityDiscountVO;
 import com.goal.model.vo.SkuVO;
+import com.goal.service.discount.IDiscountCalculateService;
 import com.goal.service.trail.AbstractGroupBuyMarketSupport;
 import com.goal.service.trail.factory.DefaultActivityStrategyFactory;
 import com.goal.service.trail.thread.QueryGroupBuyActivityDiscountVOThreadTask;
@@ -13,6 +16,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +32,9 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
 
     @Resource
     private ThreadPoolExecutor threadPoolExecutor;
+
+    @Resource
+    private Map<String, IDiscountCalculateService> discountCalculateServiceMap;
 
     /**
      * 异步数据加载
@@ -59,6 +67,20 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
 
     @Override
     public TrialBalanceEntity doApply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+
+        GroupBuyActivityDiscountVO groupBuyActivityDiscountVO = dynamicContext.getGroupBuyActivityDiscountVO();
+        GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount = groupBuyActivityDiscountVO.getGroupBuyDiscount();
+
+        IDiscountCalculateService discountCalculateService = discountCalculateServiceMap.get(groupBuyDiscount.getMarketPlan());
+        if (null == discountCalculateService) {
+            throw new BizException(ResponseCode.PARAM_ILLEGAL);
+        }
+
+        SkuVO skuVO = dynamicContext.getSkuVO();
+
+        BigDecimal deductionPrice = discountCalculateService.calculate(requestParameter.getUserId(), skuVO.getOriginalPrice(), groupBuyDiscount);
+        dynamicContext.setDeductionPrice(deductionPrice);
+
         return router(requestParameter, dynamicContext);
     }
 
