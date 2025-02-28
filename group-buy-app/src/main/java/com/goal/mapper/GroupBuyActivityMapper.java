@@ -8,4 +8,5 @@ public interface GroupBuyActivityMapper {
 
     List<GroupBuyActivity> queryList();
 
+    GroupBuyActivity queryValidGroupBuyActivity(GroupBuyActivity groupBuyActivity);
 }

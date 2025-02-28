@@ -3,6 +3,8 @@ package com.goal.service.trail.factory;
 import com.goal.design.StrategyHandler;
 import com.goal.model.entity.MarketProductEntity;
 import com.goal.model.entity.TrialBalanceEntity;
+import com.goal.model.vo.GroupBuyActivityDiscountVO;
+import com.goal.model.vo.SkuVO;
 import com.goal.service.trail.node.RootNode;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,10 @@ public class DefaultActivityStrategyFactory {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DynamicContext {
-        // TODO: 2025/2/27 占位字段
-        private int id;
+
+        private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
+
+        private SkuVO skuVO;
     }
 
 }

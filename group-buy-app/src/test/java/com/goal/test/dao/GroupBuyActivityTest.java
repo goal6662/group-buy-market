@@ -1,4 +1,4 @@
-package com.goal.dao;
+package com.goal.test.dao;
 
 import com.alibaba.fastjson2.JSON;
 import com.goal.model.GroupBuyActivity;

@@ -18,8 +18,8 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
     private MarketNode marketNode;
 
     @Override
-    public TrialBalanceEntity apply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+    public TrialBalanceEntity doApply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+        return router(requestParameter, dynamicContext);
     }
 
     @Override
