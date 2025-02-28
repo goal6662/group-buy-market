@@ -5,16 +5,22 @@
 <mapper namespace="com.goal.mapper.CrowdTagsJobMapper">
 
     <resultMap id="BaseResultMap" type="com.goal.model.CrowdTagsJob">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="tagId" column="tag_id" jdbcType="VARCHAR"/>
-            <result property="batchId" column="batch_id" jdbcType="VARCHAR"/>
-            <result property="tagType" column="tag_type" jdbcType="TINYINT"/>
-            <result property="tagRule" column="tag_rule" jdbcType="VARCHAR"/>
-            <result property="statStartTime" column="stat_start_time" jdbcType="TIMESTAMP"/>
-            <result property="statEndTime" column="stat_end_time" jdbcType="TIMESTAMP"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="tagId" column="tag_id" jdbcType="VARCHAR"/>
+        <result property="batchId" column="batch_id" jdbcType="VARCHAR"/>
+        <result property="tagType" column="tag_type" jdbcType="TINYINT"/>
+        <result property="tagRule" column="tag_rule" jdbcType="VARCHAR"/>
+        <result property="statStartTime" column="stat_start_time" jdbcType="TIMESTAMP"/>
+        <result property="statEndTime" column="stat_end_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <select id="queryCrowdTagsJob" resultMap="BaseResultMap">
+        select tag_type, tag_rule, stat_start_time, stat_end_time
+        from crowd_tags_job
+        where tag_id = #{tagId} and batch_id = #{batchId}
+    </select>
 
 </mapper>

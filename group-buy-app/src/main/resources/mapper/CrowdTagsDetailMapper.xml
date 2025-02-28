@@ -12,4 +12,9 @@
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <insert id="addCrowdTagsUserId">
+        insert into crowd_tags_detail(tag_id, user_id, create_time, update_time)
+        values (#{tagId}, #{userId}, now(), now())
+    </insert>
+
 </mapper>
