@@ -6,6 +6,12 @@ spring:
     url: jdbc:mysql://117.72.92.12:13306/group_buy_market
     username: root
     password: 123456
+  data:
+    redis:
+      database: 0
+      host: 117.72.92.12
+      port: 26379
+      password: 123
 mybatis:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
