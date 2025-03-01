@@ -12,4 +12,10 @@ public interface IActivityService {
 
     SCSkuActivityVO querySCSkuActivityVOBySCGoodsId(String source, String channel, String goodsId);
 
+    /**
+     * 判断用户是否在标签范围内
+     * @param tagId 标签ID
+     * @param userId 用户ID
+     */
+    boolean isTagCrowdRange(String tagId, String userId);
 }

@@ -35,6 +35,10 @@ public class DefaultActivityStrategyFactory {
          * 优惠后的价格
          */
         private BigDecimal deductionPrice;
+
+        private boolean isVisible;
+
+        private boolean isEnable;
     }
 
 }

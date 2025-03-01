@@ -20,10 +20,10 @@ public class IndexGroupBuyMarketTest {
     public void test() throws Exception {
 
         MarketProductEntity marketProductEntity = new MarketProductEntity();
-        marketProductEntity.setUserId("xiaofuge");
+        marketProductEntity.setUserId("xiaofuge2");
         marketProductEntity.setSource("s01");
         marketProductEntity.setChannel("c01");
-        marketProductEntity.setGoodsId("9890002");
+        marketProductEntity.setGoodsId("9890001");
 
         TrialBalanceEntity trialBalanceEntity = indexGroupBuyMarketService.indexMarketTrail(marketProductEntity);
         log.info("请求参数:{}", JSON.toJSONString(marketProductEntity));

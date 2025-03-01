@@ -1,14 +1,8 @@
 package com.goal.service.activity.impl;
 
 import com.goal.enums.type.DiscountTypeEnum;
-import com.goal.mapper.GroupBuyActivityMapper;
-import com.goal.mapper.GroupBuyDiscountMapper;
-import com.goal.mapper.ScSkuActivityMapper;
-import com.goal.mapper.SkuMapper;
-import com.goal.model.GroupBuyActivity;
-import com.goal.model.GroupBuyDiscount;
-import com.goal.model.ScSkuActivity;
-import com.goal.model.Sku;
+import com.goal.mapper.*;
+import com.goal.model.*;
 import com.goal.model.vo.GroupBuyActivityDiscountVO;
 import com.goal.model.vo.SCSkuActivityVO;
 import com.goal.model.vo.SkuVO;
@@ -16,11 +10,16 @@ import com.goal.service.activity.IActivityService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IActivityServiceImpl implements IActivityService {
 
     @Resource
     private SkuMapper skuMapper;
+
+    @Resource
+    private CrowdTagsDetailMapper crowdTagsDetailMapper;
 
     @Resource
     private ScSkuActivityMapper scSkuActivityMapper;
@@ -102,6 +101,17 @@ public class IActivityServiceImpl implements IActivityService {
                 .chanel(channel)
                 .activityId(scSkuActivityRes.getActivityId())
                 .build();
+    }
+
+    @Override
+    public boolean isTagCrowdRange(String tagId, String userId) {
+
+        List<CrowdTagsDetail> crowdTagsDetailList = crowdTagsDetailMapper.queryCrowdTagDetailByDetail(CrowdTagsDetail.builder()
+                        .tagId(tagId)
+                        .userId(userId)
+                .build());
+
+        return !crowdTagsDetailList.isEmpty();
     }
 
 }

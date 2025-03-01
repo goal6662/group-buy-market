@@ -1,10 +1,12 @@
 package com.goal.model.vo;
 
+import com.goal.common.Constants;
 import com.goal.enums.type.DiscountTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -74,6 +76,28 @@ public class GroupBuyActivityDiscountVO {
      * 人群标签规则范围
      */
     private String tagScope;
+
+    /**
+     * 能否查看拼团
+     */
+    public boolean isVisible() {
+        String[] split = tagScope.split(Constants.SPLITTER);
+        if (split.length > 0 && StringUtils.isNotBlank(split[0]) && "1".equals(split[0])) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 能否参与拼团
+     */
+    public boolean isEnabled() {
+        String[] split = tagScope.split(Constants.SPLITTER);
+        if (split.length == 2 && StringUtils.isNotBlank(split[1]) && "2".equals(split[1])) {
+            return false;
+        }
+        return true;
+    }
 
     @Getter
     @Builder

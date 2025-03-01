@@ -17,4 +17,9 @@
         values (#{tagId}, #{userId}, now(), now())
     </insert>
 
+    <select id="queryCrowdTagDetailByDetail" resultMap="BaseResultMap">
+        select id, tag_id, user_id from crowd_tags_detail
+        where tag_id = #{crowdTagsDetail.tagId} and user_id = #{crowdTagsDetail.userId}
+    </select>
+
 </mapper>
