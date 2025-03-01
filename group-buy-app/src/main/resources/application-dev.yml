@@ -1,5 +1,9 @@
 server:
   port: 8080
+app:
+  config:
+    dcc:
+      url: group_buy_market_dcc_
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,5 +19,5 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
