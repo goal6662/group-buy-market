@@ -98,5 +98,5 @@ public interface IRedisService {
 
     List<String> keys(String pattern);
 
-    RBitSet getBitSet(String tagId);
+    RBitSet getBitSet(java.lang.String tagId);
 }

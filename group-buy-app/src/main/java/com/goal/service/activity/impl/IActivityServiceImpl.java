@@ -3,11 +3,14 @@ package com.goal.service.activity.impl;
 import com.goal.enums.type.DiscountTypeEnum;
 import com.goal.mapper.GroupBuyActivityMapper;
 import com.goal.mapper.GroupBuyDiscountMapper;
+import com.goal.mapper.ScSkuActivityMapper;
 import com.goal.mapper.SkuMapper;
 import com.goal.model.GroupBuyActivity;
 import com.goal.model.GroupBuyDiscount;
+import com.goal.model.ScSkuActivity;
 import com.goal.model.Sku;
 import com.goal.model.vo.GroupBuyActivityDiscountVO;
+import com.goal.model.vo.SCSkuActivityVO;
 import com.goal.model.vo.SkuVO;
 import com.goal.service.activity.IActivityService;
 import jakarta.annotation.Resource;
@@ -20,18 +23,20 @@ public class IActivityServiceImpl implements IActivityService {
     private SkuMapper skuMapper;
 
     @Resource
+    private ScSkuActivityMapper scSkuActivityMapper;
+
+    @Resource
     private GroupBuyActivityMapper groupBuyActivityMapper;
 
     @Resource
     private GroupBuyDiscountMapper groupBuyDiscountMapper;
 
     @Override
-    public GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(String source, String channel) {
+    public GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(Long activityId) {
 
         GroupBuyActivity groupBuyActivityRes =
                 groupBuyActivityMapper.queryValidGroupBuyActivity(GroupBuyActivity.builder()
-                        .source(source)
-                        .channel(channel)
+                        .activityId(activityId)
                         .build());
 
         String discountId = groupBuyActivityRes.getDiscountId();
@@ -52,9 +57,6 @@ public class IActivityServiceImpl implements IActivityService {
         return GroupBuyActivityDiscountVO.builder()
                 .activityId(groupBuyActivityRes.getActivityId())
                 .activityName(groupBuyActivityRes.getActivityName())
-                .source(groupBuyActivityRes.getSource())
-                .channel(groupBuyActivityRes.getChannel())
-                .goodsId(groupBuyActivityRes.getGoodsId())
                 .groupType(groupBuyActivityRes.getGroupType())
                 .takeLimitCount(groupBuyActivityRes.getTakeLimitCount())
                 .target(groupBuyActivityRes.getTarget())
@@ -72,11 +74,33 @@ public class IActivityServiceImpl implements IActivityService {
     public SkuVO querySkuByGoodsId(String goodsId) {
 
         Sku skuRes = skuMapper.querySkuByGoodsId(goodsId);
+        if (skuRes == null) {
+            return null;
+        }
 
         return SkuVO.builder()
                 .goodsId(goodsId)
                 .goodsName(skuRes.getGoodsName())
                 .originalPrice(skuRes.getOriginalPrice())
+                .build();
+    }
+
+    @Override
+    public SCSkuActivityVO querySCSkuActivityVOBySCGoodsId(String source, String channel, String goodsId) {
+
+        ScSkuActivity scSkuActivityRes = scSkuActivityMapper.queryScSkuActivityByGoodsId(ScSkuActivity.builder()
+                .goodsId(goodsId)
+                .build());
+
+        if (null == scSkuActivityRes) {
+            return null;
+        }
+
+        return SCSkuActivityVO.builder()
+                .goodsId(goodsId)
+                .source(source)
+                .chanel(channel)
+                .activityId(scSkuActivityRes.getActivityId())
                 .build();
     }
 

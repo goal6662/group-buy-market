@@ -7,9 +7,6 @@
     <resultMap id="BaseResultMap" type="com.goal.model.GroupBuyActivity">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="activityId" column="activity_id" jdbcType="BIGINT"/>
-            <result property="source" column="source" jdbcType="VARCHAR"/>
-            <result property="channel" column="channel" jdbcType="VARCHAR"/>
-            <result property="goodsId" column="goods_id" jdbcType="VARCHAR"/>
             <result property="discountId" column="discount_id" jdbcType="VARCHAR"/>
             <result property="groupType" column="group_type" jdbcType="TINYINT"/>
             <result property="takeLimitCount" column="take_limit_count" jdbcType="INTEGER"/>
@@ -29,11 +26,11 @@
 
     <select id="queryValidGroupBuyActivity" parameterType="com.goal.model.GroupBuyActivity" resultMap="BaseResultMap">
         select
-            activity_id, activity_name, source, channel, goods_id,
+            activity_id, activity_name,
             discount_id, group_type, take_limit_count, target, valid_time,
             status, start_time, end_time, tag_id, tag_scope
         from group_buy_activity
-        where source = #{source} and channel = #{channel}
+        where activity_id = #{groupBuyActivity.activityId}
         order by id desc
         limit 1
     </select>
